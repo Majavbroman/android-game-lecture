@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    public event Action OnPlayerDeath;
+    public event Action OnGameEnd;
     public event Action OnGameStart;
 
     [SerializeField] TextMeshProUGUI _mainText;
@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
 
     public void PlayerDied()
     {
-        OnPlayerDeath?.Invoke();
+        OnGameEnd?.Invoke();
 
         if (_score > _highestScore)
         {

@@ -16,7 +16,7 @@ public class Bullet : MonoBehaviour
 
             if (health != null)
             {
-                health.TakeDamage(1);
+                health.ChangeHealth(-1);
             }
         }
         else

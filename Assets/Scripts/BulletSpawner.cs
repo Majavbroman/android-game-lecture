@@ -7,7 +7,7 @@ public class BulletSpawner : MonoBehaviour
     [SerializeField] private GameObject _bulletPrefab;
 
     [Serializable]
-    private class Interval
+    private struct Interval
     {
         public float MaxIntervalTime;
         public float MinIntervalTime;
@@ -28,7 +28,7 @@ public class BulletSpawner : MonoBehaviour
     private void Start()
     {
         GameManager.Instance.OnGameStart += () => StartGame();
-        GameManager.Instance.OnPlayerDeath += () => _gameGoing = false;
+        GameManager.Instance.OnGameEnd += () => _gameGoing = false;
 
         _changeIntervalCondition = () => _currentIntervalIndex < _spawnIntervals.Length - 1 && _bulletsSpawned >= _spawnIntervals[_currentIntervalIndex].Threshold;
     }

@@ -2,20 +2,23 @@ using System;
 using TMPro;
 using UnityEngine;
 
-public class Health : MonoBehaviour
+public class Health
 {
-    [SerializeField] private int _maxHealth = 3;
+    private readonly int _maxHealth;
     private int _currentHealth;
-    private bool _isDead => _currentHealth <= 0;
+    private Func<bool> _isDead => () => _currentHealth <= 0;
 
     [SerializeField] private TextMeshProUGUI _healthText;
 
-    private Action _onDeath;
+    private readonly Action _onDeath;
 
-    private void Start()
+    public Health(int maxHealth)
     {
-        GameManager.Instance.OnGameStart += StartGame;
-        _onDeath += () => GameManager.Instance.PlayerDied();
+        _maxHealth = maxHealth;
+        _currentHealth = maxHealth;
+
+        GameManager gameManager = GameManager.Instance;
+        _onDeath = gameManager.PlayerDied;
     }
 
     public void StartGame()
@@ -24,12 +27,12 @@ public class Health : MonoBehaviour
         UpdateHealthText();
     }
 
-    public void TakeDamage(int damage)
+    public void ChangeHealth(int amount)
     {
-        if (_isDead) return;
+        if (_isDead()) return;
 
-        _currentHealth -= damage;
-        if (_isDead)
+        _currentHealth += amount;
+        if (_isDead())
         {
             _currentHealth = 0;
             _onDeath?.Invoke();
