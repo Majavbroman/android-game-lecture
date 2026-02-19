@@ -15,12 +15,13 @@ public class PlayerController : MonoBehaviour
 
     private void Awake() {
         _rb = GetComponent<Rigidbody2D>();
-        _health = new Health(_playerData.MaxHealth);
         _speed = _playerData.Speed;
     }
 
     private void Start()
     {
+        _health = new Health(_playerData.MaxHealth);
+
         InputReader.Instance.TouchPositionEvent += HandleTouchPosition;
 
         GameManager gameManager = GameManager.Instance;
@@ -50,6 +51,6 @@ public class PlayerController : MonoBehaviour
     private void OnGameStart()
     {
         _gameGoing = true;
-        _health.StartGame();
+        _health.ChangeHealth(int.MaxValue);
     }
 }

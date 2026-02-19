@@ -2,13 +2,20 @@ using System;
 using TMPro;
 using UnityEngine;
 
-public class Health
+public class Health : IHealth
 {
     private readonly int _maxHealth;
-    private int _currentHealth;
-    private Func<bool> _isDead => () => _currentHealth <= 0;
+    private int _currentHealth { 
+        get => _currentHealth;
+        set
+        {
+            _currentHealth = Mathf.Clamp(value, 0, _maxHealth);
+        }
+    }
+    
+    private Func<bool> IsDead => () => _currentHealth <= 0;
 
-    [SerializeField] private TextMeshProUGUI _healthText;
+    private IUIObject _ui;
 
     private readonly Action _onDeath;
 
@@ -21,32 +28,20 @@ public class Health
         _onDeath = gameManager.PlayerDied;
     }
 
-    public void StartGame()
-    {
-        _currentHealth = _maxHealth;
-        UpdateHealthText();
-    }
-
     public void ChangeHealth(int amount)
     {
-        if (_isDead()) return;
+        if (IsDead()) return;
 
         _currentHealth += amount;
-        if (_isDead())
+
+        if (IsDead())
         {
-            _currentHealth = 0;
             _onDeath?.Invoke();
         }
 
-        UpdateHealthText();
-    }   
-
-    private void UpdateHealthText()
-    {
-        if (_healthText != null)
-        {
-            _healthText.color = Color.Lerp(Color.red, Color.green, (float)_currentHealth / _maxHealth);
-            _healthText.text = $"Health: {_currentHealth}";
-        }
+        _ui?.Refresh();
     }
+
+    public int GetHealth() => _currentHealth;
+    public int GetMaxHealth() => _maxHealth;
 }
