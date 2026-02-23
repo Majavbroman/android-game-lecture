@@ -8,7 +8,7 @@ public class HealthUI : MonoBehaviour, IUIObject<IHealth>
 {
     [SerializeField] private GameObject _heartPrefab;
 
-    private readonly List<HealthHeart> _hearts = new();
+    private readonly List<HeartUI> _hearts = new();
 
     private void Awake() {
         if (_heartPrefab == null)
@@ -25,7 +25,7 @@ public class HealthUI : MonoBehaviour, IUIObject<IHealth>
 
         while (_hearts.Count < maxHealth / 2)
         {
-            HealthHeart newHeart = Instantiate(_heartPrefab, transform).GetComponent<HealthHeart>();
+            HeartUI newHeart = Instantiate(_heartPrefab, transform).GetComponent<HeartUI>();
             _hearts.Add(newHeart);
         }
 

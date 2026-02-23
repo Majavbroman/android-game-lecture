@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class HealthChangeEffect : Effect
+public class HealEffect : Effect
 {
     [SerializeField] private int _amount;
 
@@ -9,7 +9,7 @@ public class HealthChangeEffect : Effect
     {
         if (target.TryGetComponent<IHealth>(out var health))
         {
-            health.ChangeHealth(_amount);
+            health.Heal(_amount);
         }
     }
 }

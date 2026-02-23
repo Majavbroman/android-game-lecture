@@ -13,7 +13,8 @@ public enum HeartType
 {
     Red,
     Blue,
-    Green
+    Green,
+    Orange
 }
 
 public static class HeartData

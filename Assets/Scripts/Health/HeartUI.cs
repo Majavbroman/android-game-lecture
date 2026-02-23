@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(RawImage))]
-public class HealthHeart : MonoBehaviour
+public class HeartUI : MonoBehaviour
 {
     private HeartState _state;
     private HeartType _type;

@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 5335744136516966528}
   - component: {fileID: 3658338179461611216}
   - component: {fileID: 3445954392655680417}
-  - component: {fileID: 2636338411884946925}
+  - component: {fileID: 2413770381728416297}
   m_Layer: 5
-  m_Name: Heart
+  m_Name: HeartUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -73,7 +73,7 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
---- !u!114 &2636338411884946925
+--- !u!114 &2413770381728416297
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -82,6 +82,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 2022230275545874872}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbba7f75da0cd034081b6973384cc2f6, type: 3}
+  m_Script: {fileID: 11500000, guid: 04ad98dd07b33cf448e8eaf73d6b87fb, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HealthHeart
+  m_EditorClassIdentifier: Assembly-CSharp::HeartUI

@@ -2,9 +2,8 @@ using System;
 using TMPro;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
-    public static GameManager Instance { get; private set; }
 
     [SerializeField] private EventChannel<Empty> OnGameStart;
     [SerializeField] private EventChannel<Empty> OnGameEnd;
@@ -14,18 +13,6 @@ public class GameManager : MonoBehaviour
 
     private float _score = 0;
     private float _highestScore = 0;
-
-    private void Awake() {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-    }
 
     private void Start() {
         InputReader.Instance.TapEvent += HandleTap;

@@ -7,7 +7,9 @@ using UnityEngine.Events;
 
 public class Health : MonoBehaviour, IHealth
 {
-    [SerializeField] private int _maxHealth;
+    private HealthData _data;
+
+    [SerializeField] private int _maxHealth = 6;
     private int _currentHealth;
     
     private Func<bool> IsDead => () => _currentHealth <= 0;
@@ -25,18 +27,27 @@ public class Health : MonoBehaviour, IHealth
         _onDeath = gameManager.PlayerDied;
     }
 
-    public void ChangeHealth(int amount)
+    public void Damage(int amount)
     {
         if (IsDead()) return;
 
-        _currentHealth += amount;
-
+        _currentHealth -= amount;
         _currentHealth = Mathf.Clamp(_currentHealth, 0, _maxHealth);
 
         if (IsDead())
         {
             _onDeath?.Invoke();
         }
+
+        _healthEventChannel.Invoke(this);
+    }
+
+    public void Heal(int amount)
+    {
+        if (IsDead()) return;
+
+        _currentHealth += amount;
+        _currentHealth = Mathf.Clamp(_currentHealth, 0, _maxHealth);
 
         _healthEventChannel.Invoke(this);
     }
@@ -61,4 +72,11 @@ public class Health : MonoBehaviour, IHealth
 
     public int GetHealth() => _currentHealth;
     public int GetMaxHealth() => _maxHealth;
+
+    public void SetData(HealthData data)
+    {
+        _data = data;
+    }
+
+    public HealthData GetData() => _data;
 }

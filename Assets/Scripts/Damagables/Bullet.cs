@@ -14,7 +14,7 @@ public class Bullet : MonoBehaviour
 
         if (collider.TryGetComponent(out IHealth health))
         {
-            health?.ChangeHealth(-1);
+            health?.Damage(1);
         }
         else
         {
