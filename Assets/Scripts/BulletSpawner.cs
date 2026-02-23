@@ -27,19 +27,17 @@ public class BulletSpawner : MonoBehaviour
 
     private void Start()
     {
-        GameManager.Instance.OnGameStart += () => StartGame();
-        GameManager.Instance.OnGameEnd += () => _gameGoing = false;
-
         _changeIntervalCondition = () => _currentIntervalIndex < _spawnIntervals.Length - 1 && _bulletsSpawned >= _spawnIntervals[_currentIntervalIndex].Threshold;
     }
 
-    private void StartGame()
+    public void StartGame()
     {
         _gameGoing = true;
         _bulletsSpawned = 0;
         _currentIntervalIndex = 0;
         SetTimer();
     }
+    public void EndGame() => _gameGoing = false;
 
     private void Update()
     {

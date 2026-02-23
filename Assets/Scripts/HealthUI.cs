@@ -1,56 +1,58 @@
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 [RequireComponent(typeof(RectTransform))]
-public class HealthUI : MonoBehaviour, IUIObject
+public class HealthUI : MonoBehaviour, IUIObject<IHealth>
 {
     [SerializeField] private GameObject _heartPrefab;
 
-    private IHealth _health;
-    private List<HealthHeart> _hearts = new List<HealthHeart>();
-
-    private RectTransform _rectTransform;
+    private readonly List<HealthHeart> _hearts = new();
 
     private void Awake() {
         if (_heartPrefab == null)
         {
             Debug.LogError("HealthUI: Heart prefab is not assigned.");
+            return;
         }
-
-        _rectTransform = GetComponent<RectTransform>();
     }
 
-    private void Start() {
-        UIManager uiManager = UIManager.Instance;
-    }
-
-
-    public void Initialize(IHealth health)
+    public async void Refresh(IHealth health)
     {
-        _health = health;
-        Refresh();
-    }
-
-    public void Refresh()
-    {
-        int currentHealth = _health.GetHealth();
-        int maxHealth = _health.GetMaxHealth();
+        int currentHealth = health.GetHealth();
+        int maxHealth = health.GetMaxHealth();
 
         while (_hearts.Count < maxHealth / 2)
         {
-            Vector3 spawnPosition = _rectTransform.position + new Vector3(_hearts.Count * 120, 0, 0);
-            HealthHeart newHeart = Instantiate(_heartPrefab, spawnPosition, Quaternion.identity, transform).GetComponent<HealthHeart>();
+            HealthHeart newHeart = Instantiate(_heartPrefab, transform).GetComponent<HealthHeart>();
             _hearts.Add(newHeart);
+        }
+
+        for (int i = 0; i < _hearts.Count; i++)
+        {
+            if (i < currentHealth / 2)
+            {
+                await _hearts[i].SetTexture(HeartState.Full);
+            }
+            else if (i == currentHealth / 2 && currentHealth % 2 == 1)
+            {
+                await _hearts[i].SetTexture(HeartState.Half);
+            }
+            else
+            {
+                await _hearts[i].SetTexture(HeartState.Empty);
+            }
         }
     }
 
     public void Show()
     {
-        throw new System.NotImplementedException();
+        gameObject.SetActive(true);
     }
 
     public void Hide()
     {
-        throw new System.NotImplementedException();
+        gameObject.SetActive(false);
     }
 }

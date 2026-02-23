@@ -10,18 +10,15 @@ public class Bullet : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D collider) {
-        if (collider.CompareTag("Player"))
-        {
-            collider.TryGetComponent<Health>(out var health);
+        if (collider.CompareTag("Damagable")) return;
 
-            if (health != null)
-            {
-                health.ChangeHealth(-1);
-            }
+        if (collider.TryGetComponent(out IHealth health))
+        {
+            health?.ChangeHealth(-1);
         }
         else
         {
-            GameManager.Instance.AddScore(1);   
+            GameManager.Instance.ChangeScore(1);   
         }
         
         Destroy(gameObject);
@@ -29,8 +26,8 @@ public class Bullet : MonoBehaviour
 
     public void SetData(int amount)
     {
-        float size = 0.65f - (amount - 1) * 0.1f;
-        _speed = 250f - (amount - 1) * 50f;
+        float size = 1f - (amount - 1) * 0.15f;
+        _speed = 250f + (amount - 1) * 50f;
         transform.localScale = new Vector3(size, size, 1);
     }
 

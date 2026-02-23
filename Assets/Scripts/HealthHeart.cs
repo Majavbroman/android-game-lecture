@@ -1,18 +1,33 @@
+using System.Threading.Tasks;
 using UnityEngine;
-public class HealthHeart
+using UnityEngine.UI;
+
+[RequireComponent(typeof(RawImage))]
+public class HealthHeart : MonoBehaviour
 {
     private HeartState _state;
     private HeartType _type;
 
-    public HealthHeart(HeartType type, HeartState state)
-    {
-        _type = type;
-        _state = state;
+    RawImage _image;
+
+    private void Awake() {
+        _image = GetComponent<RawImage>();
     }
 
-    public void SetState(HeartState newState)
+    public async Task SetTexture(HeartState newState, HeartType type = HeartType.Red)
     {
         _state = newState;
-        // Update the heart's visual representation here
+        _type = type;
+        
+        Texture2D texture = await HeartData.GetHeartTexture(_state, _type);
+
+        if (texture != null)        
+        {
+            _image.texture = texture;
+        }
+        else
+        {
+            Debug.LogError($"HealthHeart: Texture not found for state {_state} and type {_type}");
+        }
     }
 }

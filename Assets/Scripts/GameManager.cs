@@ -6,8 +6,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    public event Action OnGameEnd;
-    public event Action OnGameStart;
+    [SerializeField] private EventChannel<Empty> OnGameStart;
+    [SerializeField] private EventChannel<Empty> OnGameEnd;
 
     [SerializeField] TextMeshProUGUI _mainText;
     [SerializeField] TextMeshProUGUI _scoreText;
@@ -29,9 +29,11 @@ public class GameManager : MonoBehaviour
 
     private void Start() {
         InputReader.Instance.TapEvent += HandleTap;
+
+        PointChangeEffect.OnPointChange += ChangeScore;
     }
 
-    public void AddScore(float amount)
+    public void ChangeScore(float amount)
     {
         _score += amount;
         _scoreText.text = $"{_score}";
@@ -39,7 +41,7 @@ public class GameManager : MonoBehaviour
 
     public void PlayerDied()
     {
-        OnGameEnd?.Invoke();
+        OnGameEnd.Invoke(new Empty());
 
         if (_score > _highestScore)
         {
@@ -56,7 +58,7 @@ public class GameManager : MonoBehaviour
         _mainText.text = "";
         _score = 0;
         _scoreText.text = $"{_score}";
-        OnGameStart?.Invoke();
+        OnGameStart.Invoke(new Empty());
 
         InputReader.Instance.TapEvent -= HandleTap;
     }

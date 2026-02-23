@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public enum HeartState
@@ -19,7 +20,7 @@ public static class HeartData
 {
     public static Dictionary<HeartState, Dictionary<HeartType, Texture2D>> HeartTextures;
 
-    public static void LoadHearts()
+    public static Task LoadHearts()
     {
         HeartTextures = new Dictionary<HeartState, Dictionary<HeartType, Texture2D>>();
         Debug.Log("HeartData: Loading heart textures...");
@@ -30,7 +31,7 @@ public static class HeartData
             {
                 HeartTextures[state] = new Dictionary<HeartType, Texture2D>
                 {
-                    { HeartType.Red, Resources.Load<Texture2D>("Hearts/Empty") }
+                    { HeartType.Red, Resources.Load<Texture2D>("UI/Hearts/Empty") }
                 };
 
                 continue;
@@ -41,7 +42,7 @@ public static class HeartData
             foreach (HeartType type in System.Enum.GetValues(typeof(HeartType)))
             {
                 string textureName = $"{type}_{state}";
-                Texture2D texture = Resources.Load<Texture2D>($"Hearts/{textureName}");
+                Texture2D texture = Resources.Load<Texture2D>($"UI/Hearts/{textureName}");
                 if (texture != null)
                 {
                     HeartTextures[state][type] = texture;
@@ -52,13 +53,16 @@ public static class HeartData
                 }
             }
         }
+
+        Debug.Log("HeartData: Heart textures loaded.");
+        return Task.CompletedTask;
     }
 
-    public static Texture2D GetHeartTexture(HeartState state, HeartType type = HeartType.Red)
+    public async static Task<Texture2D> GetHeartTexture(HeartState state, HeartType type = HeartType.Red)
     {
         if (HeartTextures == null)
         {
-            LoadHearts();
+            await LoadHearts();
         }
 
         if (state == HeartState.Empty)

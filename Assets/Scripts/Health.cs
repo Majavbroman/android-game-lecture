@@ -1,28 +1,25 @@
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class Health : IHealth
+public class Health : MonoBehaviour, IHealth
 {
-    private readonly int _maxHealth;
-    private int _currentHealth { 
-        get => _currentHealth;
-        set
-        {
-            _currentHealth = Mathf.Clamp(value, 0, _maxHealth);
-        }
-    }
+    [SerializeField] private int _maxHealth;
+    private int _currentHealth;
     
     private Func<bool> IsDead => () => _currentHealth <= 0;
 
-    private IUIObject _ui;
+    private Action _onDeath;
 
-    private readonly Action _onDeath;
+    [SerializeField] private EventChannel<IHealth> _healthEventChannel;
 
-    public Health(int maxHealth)
+
+    private void Start()
     {
-        _maxHealth = maxHealth;
-        _currentHealth = maxHealth;
+        _currentHealth = _maxHealth;
 
         GameManager gameManager = GameManager.Instance;
         _onDeath = gameManager.PlayerDied;
@@ -34,12 +31,32 @@ public class Health : IHealth
 
         _currentHealth += amount;
 
+        _currentHealth = Mathf.Clamp(_currentHealth, 0, _maxHealth);
+
         if (IsDead())
         {
             _onDeath?.Invoke();
         }
 
-        _ui?.Refresh();
+        _healthEventChannel.Invoke(this);
+    }
+
+    public void SetHealth(int amount)
+    {
+        _currentHealth = Mathf.Clamp(amount, 0, _maxHealth);
+
+        if (IsDead())
+        {
+            _onDeath?.Invoke();
+        }
+
+        _healthEventChannel.Invoke(this);
+    }
+
+    public void ResetHealth()
+    {
+        _currentHealth = _maxHealth;
+        _healthEventChannel.Invoke(this);
     }
 
     public int GetHealth() => _currentHealth;
