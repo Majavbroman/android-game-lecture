@@ -10,8 +10,7 @@ public class HealthData : ScriptableObject
         public HeartType Type;
         public int Max;
         public int Start;
-        public int Current;
     }
 
-    [SerializeField] private HealthType[] _healthTypes;
+    public HealthType[] HealthTypes;
 }

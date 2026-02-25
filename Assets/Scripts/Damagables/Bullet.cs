@@ -12,9 +12,9 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collider) {
         if (collider.CompareTag("Damagable")) return;
 
-        if (collider.TryGetComponent(out IHealth health))
+        if (collider.TryGetComponent(out IDamagable damagable))
         {
-            health?.Damage(1);
+            damagable.Damage(1);
         }
         else
         {

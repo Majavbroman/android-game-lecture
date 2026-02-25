@@ -7,9 +7,9 @@ public class HealEffect : Effect
 
     public override void ApplyEffect(Collider2D target)
     {
-        if (target.TryGetComponent<IHealth>(out var health))
+        if (target.TryGetComponent<IHealable>(out var healable))
         {
-            health.Heal(_amount);
+            healable.Heal(_amount);
         }
     }
 }

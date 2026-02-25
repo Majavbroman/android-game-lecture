@@ -1,14 +1,17 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
+using UnityEngine.AI;
 
 [RequireComponent(typeof(RectTransform))]
 public class HealthUI : MonoBehaviour, IUIObject<IHealth>
 {
     [SerializeField] private GameObject _heartPrefab;
 
-    private readonly List<HeartUI> _hearts = new();
+    private readonly Dictionary<HeartType, List<HeartUI>> _hearts = new();
 
     private void Awake() {
         if (_heartPrefab == null)
@@ -20,28 +23,50 @@ public class HealthUI : MonoBehaviour, IUIObject<IHealth>
 
     public async void Refresh(IHealth health)
     {
-        int currentHealth = health.GetHealth();
-        int maxHealth = health.GetMaxHealth();
+        Dictionary<HeartType, Health.Data> healthData = health.GetData();
 
-        while (_hearts.Count < maxHealth / 2)
-        {
-            HeartUI newHeart = Instantiate(_heartPrefab, transform).GetComponent<HeartUI>();
-            _hearts.Add(newHeart);
-        }
+        HeartType[] order = HeartData.HEART_ORDER;
 
-        for (int i = 0; i < _hearts.Count; i++)
+        for (int i = 0; i < order.Length; i++)
         {
-            if (i < currentHealth / 2)
+            HeartType type = order[i];
+            if (!healthData.ContainsKey(type)) continue;
+
+            Health.Data data = healthData[type];
+            int heartAmount = Mathf.CeilToInt((float)data.Max / 2);
+            List<HeartUI> hearts = _hearts.ContainsKey(type) ? _hearts[type] : new List<HeartUI>();
+
+            while (hearts.Count != heartAmount)
             {
-                await _hearts[i].SetTexture(HeartState.Full);
+                Debug.Log($"Adjusting heart count for {type}: current {hearts.Count}, target {heartAmount}");
+
+                if (hearts.Count < heartAmount)
+                {
+                    HeartUI newHeart = Instantiate(_heartPrefab, transform).GetComponent<HeartUI>();
+                    hearts.Add(newHeart);
+                }
+                else
+                {
+                    Destroy(hearts[^1].gameObject);
+                    hearts.RemoveAt(hearts.Count - 1);
+                }
             }
-            else if (i == currentHealth / 2 && currentHealth % 2 == 1)
+            _hearts[type] = hearts;
+
+            for (int j = 0; j < hearts.Count; j++)
             {
-                await _hearts[i].SetTexture(HeartState.Half);
-            }
-            else
-            {
-                await _hearts[i].SetTexture(HeartState.Empty);
+                if (j < data.Current / 2)
+                {
+                    await hearts[j].SetTexture(HeartState.Full, type);
+                }
+                else if (j == data.Current / 2 && data.Current % 2 == 1)
+                {
+                    await hearts[j].SetTexture(HeartState.Half, type);
+                }
+                else
+                {
+                    await hearts[j].SetTexture(HeartState.Empty, type);
+                }
             }
         }
     }

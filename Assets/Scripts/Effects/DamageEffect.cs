@@ -7,9 +7,9 @@ public class DamageEffect : Effect
 
     public override void ApplyEffect(Collider2D target)
     {
-        if (target.TryGetComponent<IHealth>(out var health))
+        if (target.TryGetComponent<IDamagable>(out var damagable))
         {
-            health.Damage(_amount);
+            damagable.Damage(_amount);
         }
     }
 }

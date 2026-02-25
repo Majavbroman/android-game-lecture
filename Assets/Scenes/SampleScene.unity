@@ -628,7 +628,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda22c8c15bb01f438ad473192fddddf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
-  _maxHealth: 6
+  _healthDataAsset: {fileID: 11400000, guid: b90ef2e112ee4ef41b2ee6cd136be671, type: 2}
   _healthEventChannel: {fileID: 11400000, guid: 254264c558bfef64eada1f580d952c05, type: 2}
 --- !u!114 &736462092
 MonoBehaviour:

@@ -21,6 +21,8 @@ public static class HeartData
 {
     public static Dictionary<HeartState, Dictionary<HeartType, Texture2D>> HeartTextures;
 
+    public static readonly HeartType[] HEART_ORDER = { HeartType.Red, HeartType.Green, HeartType.Orange, HeartType.Blue };
+
     public static Task LoadHearts()
     {
         HeartTextures = new Dictionary<HeartState, Dictionary<HeartType, Texture2D>>();

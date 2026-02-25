@@ -35,8 +35,6 @@ public class InputReader : MonoBehaviour, Inputs.ITouchActions
 
     public void OnTouchPos(InputAction.CallbackContext context)
     {
-        Debug.Log("Position action triggered");
-
         if (context.phase == InputActionPhase.Started || context.phase == InputActionPhase.Performed)
         {
             TouchPositionEvent?.Invoke(context.ReadValue<Vector2>());
