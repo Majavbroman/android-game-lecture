@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 6ef6e60dabdb9b6469017202eadb290a
+guid: 39ce8d1263ad51146b5cc22497198220
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8080673866037545242
-    second: bomb_active_0
+      213: -7872037099510293504
+    second: red_bomb_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -76,8 +76,8 @@ TextureImporter:
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
-    compressionQuality: 50
-    crunchedCompression: 0
+    compressionQuality: 0
+    crunchedCompression: 1
     allowsAlphaSplitting: 0
     overridden: 0
     ignorePlatformSupport: 0
@@ -113,7 +113,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: bomb_active_0
+      name: red_bomb_0
       rect:
         serializedVersion: 2
         x: 1
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6e6bc0d9eedabdf80800000000000000
-      internalID: -8080673866037545242
+      spriteID: 00c1ef047f7e0c290800000000000000
+      internalID: -7872037099510293504
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      bomb_active_0: -8080673866037545242
+      red_bomb_0: -7872037099510293504
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

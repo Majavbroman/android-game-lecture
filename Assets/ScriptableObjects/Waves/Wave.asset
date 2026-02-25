@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a2fa767c3e18d24fad53e1aa9f52b39, type: 3}
+  m_Name: Wave
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectWave
+  AvailableObjects:
+  - Obj: {fileID: 3587881179098932768, guid: 021df5a48eaa13c4382748d697835c19, type: 3}
+    Probability: 64
+  - Obj: {fileID: 3587881179098932768, guid: 021df5a48eaa13c4382748d697835c19, type: 3}
+    Probability: 36
+  MinTimeBetweenSpawns: 0
+  MaxTimeBetweenSpawns: 0
+  MinObjectSpawns: 1
+  MaxObjectSpawns: 1

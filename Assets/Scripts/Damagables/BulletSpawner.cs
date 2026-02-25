@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class BulletSpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject _bulletPrefab;
+    [SerializeField] private FallingObject _bulletPrefab;
 
     [Serializable]
     private struct Interval
     {
-        public float MaxIntervalTime;
-        public float MinIntervalTime;
-        public float Threshold;
-        [Range(1, 10)] public int MaxBullets;
+        public ObjectWave Wave;
+        public int WaveEndThreshold;
     }
 
     [Header("Spawn Interval Settings")]
@@ -27,7 +25,7 @@ public class BulletSpawner : MonoBehaviour
 
     private void Start()
     {
-        _changeIntervalCondition = () => _currentIntervalIndex < _spawnIntervals.Length - 1 && _bulletsSpawned >= _spawnIntervals[_currentIntervalIndex].Threshold;
+        _changeIntervalCondition = () => _currentIntervalIndex < _spawnIntervals.Length - 1 && _bulletsSpawned >= _spawnIntervals[_currentIntervalIndex].WaveEndThreshold;
     }
 
     public void StartGame()
@@ -47,7 +45,7 @@ public class BulletSpawner : MonoBehaviour
 
         if (_spawnTimer <= 0)
         {
-            int bulletAmount = UnityEngine.Random.Range(1, _spawnIntervals[_currentIntervalIndex].MaxBullets + 1);
+            int bulletAmount = UnityEngine.Random.Range(1, _spawnIntervals[_currentIntervalIndex].Wave.MaxObjectSpawns + 1);
             StartCoroutine(SpawnBullet(bulletAmount));
 
             if (_changeIntervalCondition())
@@ -65,8 +63,8 @@ public class BulletSpawner : MonoBehaviour
         {
             float spawnX = UnityEngine.Random.Range(0.05f, 0.95f);
             Vector2 spawnPosition = Camera.main.ViewportToWorldPoint(new Vector3(spawnX, 1.1f, 0));
-            Bullet bullet = Instantiate(_bulletPrefab, spawnPosition, Quaternion.identity).GetComponent<Bullet>();
-            bullet.SetData(amount);
+            FallingObject @object = Instantiate(_bulletPrefab, spawnPosition, Quaternion.identity);
+            @object.SetObjectAmount(amount);
             _bulletsSpawned++;
             yield return new WaitForSeconds(0.15f * (amount - 1));
         }
@@ -75,6 +73,6 @@ public class BulletSpawner : MonoBehaviour
     private void SetTimer()
     {
         Interval currentInterval = _spawnIntervals[_currentIntervalIndex];
-        _spawnTimer = UnityEngine.Random.Range(currentInterval.MinIntervalTime, currentInterval.MaxIntervalTime);
+        _spawnTimer = UnityEngine.Random.Range(currentInterval.Wave.MinTimeBetweenSpawns, currentInterval.Wave.MaxTimeBetweenSpawns);
     }
 }

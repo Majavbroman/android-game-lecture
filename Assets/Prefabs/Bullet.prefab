@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3864969122637032684}
   - component: {fileID: 6173288663028472502}
-  - component: {fileID: 5526064851539966360}
   - component: {fileID: -2935842789810423070}
   - component: {fileID: 6549560105500192739}
   - component: {fileID: 6199716485028348570}
+  - component: {fileID: 3587881179098932768}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Damagable
@@ -93,20 +93,8 @@ SpriteRenderer:
   m_Size: {x: 0.62, y: 0.57}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
---- !u!114 &5526064851539966360
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6503535854379685449}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 142bd453799eefa49ae25db9b8b6d2f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Bullet
 --- !u!50 &-2935842789810423070
 Rigidbody2D:
   serializedVersion: 5
@@ -193,3 +181,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EffectOnTrigger
   effects: []
+--- !u!114 &3587881179098932768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6503535854379685449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5118c983931eff94eb326c6d8cf971bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FallingObject
+  _minGravity: 0
+  _maxGravity: 0
+  _rotationSpeed: 0
+  _sizePerObjectMult: 0
