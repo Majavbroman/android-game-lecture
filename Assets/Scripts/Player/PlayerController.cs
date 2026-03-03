@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        InputReader.Instance.TouchPositionEvent += HandleTouchPosition;
+        InputReader.TouchPositionEvent += HandleTouchPosition;
     }
 
     void FixedUpdate()

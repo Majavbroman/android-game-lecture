@@ -18,6 +18,23 @@ public class ObjectWave : ScriptableObject
     [Range(1, 10)] public int MinObjectSpawns;
     [Range(1, 10)] public int MaxObjectSpawns;
 
+    public FallingObject GetRandomObject()
+    {
+        int randomValue = UnityEngine.Random.Range(0, 100);
+        int cumulativeProbability = 0;
+
+        foreach (var obj in AvailableObjects)
+        {
+            cumulativeProbability += obj.Probability;
+            if (randomValue < cumulativeProbability)
+            {
+                return obj.Obj;
+            }
+        }
+
+        return AvailableObjects[^1].Obj;
+    }
+
     private void OnValidate()
     {
         if (MinTimeBetweenSpawns > MaxTimeBetweenSpawns)

@@ -143,5 +143,7 @@ public class Health : MonoBehaviour, IHealth, IDamagable, IHealable
 
             if (amount <= 0) break;
         }
+
+        _healthEventChannel.Invoke(this);
     }
 }

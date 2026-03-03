@@ -4,23 +4,13 @@ using UnityEngine.InputSystem;
 
 public class InputReader : MonoBehaviour, Inputs.ITouchActions
 {
-    public static InputReader Instance { get; private set; }
     Inputs inputs;
 
-    public event Action<Vector2> TouchPositionEvent;
-    public event Action TapEvent;
+    public static event Action<Vector2> TouchPositionEvent;
+    public static event Action TapEvent;
 
     private void Awake() {
         inputs = new Inputs();
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
     }
 
     private void OnEnable()

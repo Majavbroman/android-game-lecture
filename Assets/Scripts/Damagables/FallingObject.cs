@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -12,7 +13,7 @@ public class FallingObject : MonoBehaviour
     private protected virtual void Start()
     {
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        rb.gravityScale = Random.Range(_minGravity, _maxGravity);
+        rb.gravityScale = UnityEngine.Random.Range(_minGravity, _maxGravity);
     }
 
     private protected virtual void Update()
@@ -25,7 +26,7 @@ public class FallingObject : MonoBehaviour
 
     public void SetObjectAmount(int amount)
     {
-        float size = 1f + (amount - 1) * _sizePerObjectMult;
+        float size = Mathf.Pow(1f - _sizePerObjectMult, amount - 1);
         transform.localScale = new Vector3(size, size, 1);
     }
 

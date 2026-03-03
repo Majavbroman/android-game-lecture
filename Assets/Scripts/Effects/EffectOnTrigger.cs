@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class EffectOnTrigger : MonoBehaviour
 {
-    [SerializeField] private List<Effect> effects;
+    [SerializeField] private List<Effect> _effects;
 
     private void OnTriggerEnter2D(Collider2D target)
     {
-        foreach (var effect in effects)
+        foreach (var effect in _effects)
         {
             effect.ApplyEffect(target);
         }
+
+        Destroy(gameObject);
     }
 }

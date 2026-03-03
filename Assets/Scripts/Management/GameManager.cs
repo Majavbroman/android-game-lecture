@@ -15,8 +15,7 @@ public class GameManager : Singleton<GameManager>
     private float _highestScore = 0;
 
     private void Start() {
-        InputReader.Instance.TapEvent += HandleTap;
-
+        InputReader.TapEvent += HandleTap;
         PointChangeEffect.OnPointChange += ChangeScore;
     }
 
@@ -37,7 +36,7 @@ public class GameManager : Singleton<GameManager>
 
         _mainText.text = $"Final Score: {_score}\nHighest Score: {_highestScore}\nTap to Restart.";
 
-        InputReader.Instance.TapEvent += HandleTap;
+        InputReader.TapEvent += HandleTap;
     }
 
     private void HandleTap()
@@ -47,6 +46,6 @@ public class GameManager : Singleton<GameManager>
         _scoreText.text = $"{_score}";
         OnGameStart.Invoke(new Empty());
 
-        InputReader.Instance.TapEvent -= HandleTap;
+        InputReader.TapEvent -= HandleTap;
     }
 }

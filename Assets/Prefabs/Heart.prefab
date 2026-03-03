@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 6549560105500192739}
   - component: {fileID: 6199716485028348570}
   - component: {fileID: 3587881179098932768}
-  m_Layer: 0
-  m_Name: Bullet
+  m_Layer: 6
+  m_Name: Heart
   m_TagString: Damagable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -85,15 +85,15 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -2613247888821195678, guid: 36455f9617ecdc445a46946f53da9652, type: 3}
+  m_Sprite: {fileID: -205270267638800340, guid: 5882f2085fef3014c9909f7b1b59c424, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.62, y: 0.57}
+  m_Size: {x: 1.22, y: 1.13}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
 --- !u!50 &-2935842789810423070
 Rigidbody2D:
@@ -160,8 +160,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.62, y: 0.57}
-    newSize: {x: 0.62, y: 0.57}
+    oldSize: {x: 0.38, y: 0.34}
+    newSize: {x: 1.22, y: 1.13}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -175,12 +175,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6503535854379685449}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36249ab1eda0a4342a234668e6bed4ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EffectOnTrigger
-  effects: []
+  _effects:
+  - {fileID: 11400000, guid: ae97c5f431958c0458e54c5c4bbb01d5, type: 2}
+  - {fileID: 11400000, guid: d491db71e705b914990da147e8cf46a0, type: 2}
+  _collided: 0
 --- !u!114 &3587881179098932768
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,7 +196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5118c983931eff94eb326c6d8cf971bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FallingObject
-  _minGravity: 0
-  _maxGravity: 0
+  _minGravity: 0.5
+  _maxGravity: 1.25
   _rotationSpeed: 0
   _sizePerObjectMult: 0

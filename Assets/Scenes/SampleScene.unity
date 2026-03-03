@@ -741,32 +741,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b65fd5d4ca157444c9569e1201c656d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BulletSpawner
-  _bulletPrefab: {fileID: 6503535854379685449, guid: 021df5a48eaa13c4382748d697835c19, type: 3}
   _spawnIntervals:
-  - MaxIntervalTime: 3
-    MinIntervalTime: 2
-    Threshold: 5
-    MaxBullets: 0
-  - MaxIntervalTime: 2.5
-    MinIntervalTime: 2
-    Threshold: 10
-    MaxBullets: 0
-  - MaxIntervalTime: 2
-    MinIntervalTime: 1.5
-    Threshold: 20
-    MaxBullets: 2
-  - MaxIntervalTime: 3
-    MinIntervalTime: 1.25
-    Threshold: 50
-    MaxBullets: 3
-  - MaxIntervalTime: 1.5
-    MinIntervalTime: 0.75
-    Threshold: 100
-    MaxBullets: 2
-  - MaxIntervalTime: 1.25
-    MinIntervalTime: 0.4
-    Threshold: 1000
-    MaxBullets: 3
+  - Wave: {fileID: 11400000, guid: 7c77b5919ce5d174aa8badebaae38b8b, type: 2}
+    WaveEndThreshold: 10
+  - Wave: {fileID: 11400000, guid: a420f0a311bfd3b448728c883a4a3049, type: 2}
+    WaveEndThreshold: 20
+  - Wave: {fileID: 11400000, guid: 3068a9ad44771d24985f5bf1e88c7fe5, type: 2}
+    WaveEndThreshold: 40
+  - Wave: {fileID: 11400000, guid: dc3df36554a5b154b8aebb18cc0031f5, type: 2}
+    WaveEndThreshold: 65
+  - Wave: {fileID: 11400000, guid: b1b71f34998f71d4ab0caf8fbaa31e99, type: 2}
+    WaveEndThreshold: 90
+  - Wave: {fileID: 11400000, guid: 776df33304cca8549aa8ce1123945769, type: 2}
+    WaveEndThreshold: 120
+  - Wave: {fileID: 11400000, guid: 0eb04bfb0ed8bc24b96b339bc88b9009, type: 2}
+    WaveEndThreshold: 10000
 --- !u!4 &966642001
 Transform:
   m_ObjectHideFlags: 0
@@ -1412,7 +1401,7 @@ GameObject:
   - component: {fileID: 2022258040}
   m_Layer: 0
   m_Name: Tilemap
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "DamageEffect", menuName = "Scriptable Objects/Effects/Damage Effect")]
 public class DamageEffect : Effect
 {
     [SerializeField] private int _amount;

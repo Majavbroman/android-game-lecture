@@ -1,11 +1,10 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BulletSpawner : MonoBehaviour
 {
-    [SerializeField] private FallingObject _bulletPrefab;
-
     [Serializable]
     private struct Interval
     {
@@ -15,7 +14,7 @@ public class BulletSpawner : MonoBehaviour
 
     [Header("Spawn Interval Settings")]
     [SerializeField] private Interval[] _spawnIntervals;
-    private int _currentIntervalIndex = 0;
+    private Queue<Interval> _intervalQueue = new Queue<Interval>();
     private Func<bool> _changeIntervalCondition;
 
     private float _bulletsSpawned = 0;
@@ -23,16 +22,24 @@ public class BulletSpawner : MonoBehaviour
 
     private bool _gameGoing = false;
 
+    private void Awake() {
+        foreach (var interval in _spawnIntervals)
+        {
+            _intervalQueue.Enqueue(interval);
+        }
+
+        _spawnIntervals = null;
+    }
+
     private void Start()
     {
-        _changeIntervalCondition = () => _currentIntervalIndex < _spawnIntervals.Length - 1 && _bulletsSpawned >= _spawnIntervals[_currentIntervalIndex].WaveEndThreshold;
+        _changeIntervalCondition = () => _intervalQueue.Count > 1 && _bulletsSpawned >= _intervalQueue.Peek().WaveEndThreshold;
     }
 
     public void StartGame()
     {
         _gameGoing = true;
         _bulletsSpawned = 0;
-        _currentIntervalIndex = 0;
         SetTimer();
     }
     public void EndGame() => _gameGoing = false;
@@ -45,25 +52,25 @@ public class BulletSpawner : MonoBehaviour
 
         if (_spawnTimer <= 0)
         {
-            int bulletAmount = UnityEngine.Random.Range(1, _spawnIntervals[_currentIntervalIndex].Wave.MaxObjectSpawns + 1);
-            StartCoroutine(SpawnBullet(bulletAmount));
+            int bulletAmount = UnityEngine.Random.Range(1, _intervalQueue.Peek().Wave.MaxObjectSpawns + 1);
+            StartCoroutine(SpawnBullets(bulletAmount));
 
             if (_changeIntervalCondition())
             {
-                _currentIntervalIndex++;
+                _intervalQueue.Dequeue();
             }
 
             SetTimer();
         }
     }
 
-    private IEnumerator SpawnBullet(int amount)
+    private IEnumerator SpawnBullets(int amount)
     {
         for (int i = 0; i < amount; i++)
         {
             float spawnX = UnityEngine.Random.Range(0.05f, 0.95f);
             Vector2 spawnPosition = Camera.main.ViewportToWorldPoint(new Vector3(spawnX, 1.1f, 0));
-            FallingObject @object = Instantiate(_bulletPrefab, spawnPosition, Quaternion.identity);
+            FallingObject @object = Instantiate(_intervalQueue.Peek().Wave.GetRandomObject(), spawnPosition, Quaternion.identity);
             @object.SetObjectAmount(amount);
             _bulletsSpawned++;
             yield return new WaitForSeconds(0.15f * (amount - 1));
@@ -72,7 +79,7 @@ public class BulletSpawner : MonoBehaviour
 
     private void SetTimer()
     {
-        Interval currentInterval = _spawnIntervals[_currentIntervalIndex];
-        _spawnTimer = UnityEngine.Random.Range(currentInterval.Wave.MinTimeBetweenSpawns, currentInterval.Wave.MaxTimeBetweenSpawns);
+        ObjectWave currentWave = _intervalQueue.Peek().Wave;
+        _spawnTimer = UnityEngine.Random.Range(currentWave.MinTimeBetweenSpawns, currentWave.MaxTimeBetweenSpawns);
     }
 }
