@@ -5,8 +5,8 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
 
-    [SerializeField] private EventChannel<Empty> OnGameStart;
-    [SerializeField] private EventChannel<Empty> OnGameEnd;
+    [SerializeField] private EventChannel<Empty> _onGameStart;
+    [SerializeField] private EventChannel<Empty> _onGameEnd;
 
     [SerializeField] TextMeshProUGUI _mainText;
     [SerializeField] TextMeshProUGUI _scoreText;
@@ -27,7 +27,7 @@ public class GameManager : Singleton<GameManager>
 
     public void PlayerDied()
     {
-        OnGameEnd.Invoke(new Empty());
+        _onGameEnd.Invoke(new Empty());
 
         if (_score > _highestScore)
         {
@@ -44,7 +44,7 @@ public class GameManager : Singleton<GameManager>
         _mainText.text = "";
         _score = 0;
         _scoreText.text = $"{_score}";
-        OnGameStart.Invoke(new Empty());
+        _onGameStart.Invoke(new Empty());
 
         InputReader.TapEvent -= HandleTap;
     }

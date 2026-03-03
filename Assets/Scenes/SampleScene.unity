@@ -148,8 +148,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f483f111f43e4894a8a7be95abc9c610, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  OnGameStart: {fileID: 11400000, guid: d2e8c78a07c53f64787a8203141ed5f5, type: 2}
-  OnGameEnd: {fileID: 11400000, guid: 7809d648a0372264f86cf52b13b02be9, type: 2}
+  _onGameStart: {fileID: 11400000, guid: d2e8c78a07c53f64787a8203141ed5f5, type: 2}
+  _onGameEnd: {fileID: 11400000, guid: 7809d648a0372264f86cf52b13b02be9, type: 2}
   _mainText: {fileID: 1619914714}
   _scoreText: {fileID: 2069439815}
 --- !u!4 &66875700

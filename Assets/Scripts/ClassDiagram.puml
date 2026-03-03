@@ -1,0 +1,220 @@
+﻿@startuml
+class QueueExtensions {
+}
+class Singleton {
+}
+class BulletSpawner {
+    + Wave : ObjectWave
+    + WaveEndThreshold : int
+    - _spawnIntervals : Interval[]
+    - _changeIntervalCondition : Func<bool>
+    - _spawnTimer : float
+    - Awake() : void
+    - Start() : void
+    + StartGame() : void
+    + EndGame() : void
+    - Update() : void
+    - SpawnBullets(amount : int) : IEnumerator
+    - SetTimer() : void
+}
+class FallingObject {
+    # _minGravity : float
+    # _maxGravity : float
+    # _rotationSpeed : float
+    # _sizePerObjectMult : float
+    + SetObjectAmount(amount : int) : void
+    # Rotate() : void
+}
+class ObjectWave {
+    + Obj : FallingObject
+    + Probability : int
+    + AvailableObjects : Object[]
+    + MinTimeBetweenSpawns : float
+    + MaxTimeBetweenSpawns : float
+    + MinObjectSpawns : int
+    + MaxObjectSpawns : int
+    + GetRandomObject() : FallingObject
+    - OnValidate() : void
+}
+class Object {
+    + Obj : FallingObject
+    + Probability : int
+    + AvailableObjects : Object[]
+    + MinTimeBetweenSpawns : float
+    + MaxTimeBetweenSpawns : float
+    + MinObjectSpawns : int
+    + MaxObjectSpawns : int
+    + GetRandomObject() : FallingObject
+    - OnValidate() : void
+}
+class DamageEffect {
+    - _amount : int
+}
+class Effect <<abstract>> {
+}
+class EffectOnTrigger {
+    - _effects : List<Effect>
+    - OnTriggerEnter2D(target : Collider2D) : void
+}
+class HealEffect {
+    - _amount : int
+}
+class PointChangeEffect {
+    - _amount : float
+    - _affectedTags : string[]
+}
+class EmptyEventChannel {
+}
+class EmptyEventListener {
+}
+class EventChannel <<abstract>> {
+    + Invoke(value : T) : void
+    + Register(observer : EventListener<T>) : void
+    + Unregister(observer : EventListener<T>) : void
+}
+class EventListener <<abstract>> {
+    # Awake() : void
+    # OnDestroy() : void
+    + Raise(value : T) : void
+}
+class PlayerHealthEventChannel {
+}
+class PlayerHealthEventListener {
+}
+class Health {
+    + Max : int
+    + Current : int
+    - _healthDataAsset : HealthData
+    - _onDeath : Action
+    - _healthEventChannel : EventChannel<IHealth>
+    - Start() : void
+    - Update() : void
+    + SetHealth(data : HealthData) : void
+    + ResetHealth() : void
+    + GetData(type : HeartType) : Data
+    - IsDead() : bool
+    + Damage(amount : int) : void
+    + Heal(amount : int) : void
+}
+class Data {
+    + Max : int
+    + Current : int
+    - _healthDataAsset : HealthData
+    - _onDeath : Action
+    - _healthEventChannel : EventChannel<IHealth>
+    - Start() : void
+    - Update() : void
+    + SetHealth(data : HealthData) : void
+    + ResetHealth() : void
+    + GetData(type : HeartType) : Data
+    - IsDead() : bool
+    + Damage(amount : int) : void
+    + Heal(amount : int) : void
+}
+class HealthData {
+    + Type : HeartType
+    + Max : int
+    + Start : int
+    + HealthTypes : HealthType[]
+}
+class HealthUI {
+    - _heartPrefab : GameObject
+    - Awake() : void
+    + Show() : void
+    + Hide() : void
+}
+class HeartData {
+}
+class HeartUI {
+    - _state : HeartState
+    - _type : HeartType
+    - Awake() : void
+}
+class IDamagable <<interface>> {
+}
+class IHealable <<interface>> {
+}
+class IHealth <<interface>> {
+}
+class InputReader {
+    - Awake() : void
+    - OnEnable() : void
+    - OnDisable() : void
+    + OnTouchPos(context : InputAction.CallbackContext) : void
+    + OnTap(context : InputAction.CallbackContext) : void
+}
+class ITouchActions <<interface>> {
+    + Dispose() : void
+    + Contains(action : InputAction) : bool
+    + GetEnumerator() : IEnumerator<InputAction>
+    + Enable() : void
+    + Disable() : void
+    + FindAction(actionNameOrId : string, throwIfNotFound : bool) : InputAction
+    + FindBinding(bindingMask : InputBinding, InputAction : out) : int
+    + Get() : InputActionMap
+    + Enable() : void
+    + Disable() : void
+    + AddCallbacks(instance : ITouchActions) : void
+    - UnregisterCallbacks(instance : ITouchActions) : void
+    + RemoveCallbacks(instance : ITouchActions) : void
+    + SetCallbacks(instance : ITouchActions) : void
+}
+' ITouchActions: <seealso cref="TouchActions.RemoveCallbacks(ITouchActions)" />
+class GameManager {
+    - _onGameStart : EventChannel<Empty>
+    - _onGameEnd : EventChannel<Empty>
+    - Start() : void
+    + ChangeScore(amount : float) : void
+    + PlayerDied() : void
+    - HandleTap() : void
+}
+class PlayerController {
+    - _playerData : PlayerData
+    - _rb : Rigidbody2D
+    - _speed : float
+    - Awake() : void
+    - Start() : void
+    - HandleTouchPosition(position : Vector2) : void
+}
+class PlayerData {
+}
+class IUIObject <<interface>> {
+}
+MonoBehaviour <|-- BulletSpawner
+MonoBehaviour <|-- FallingObject
+ScriptableObject <|-- ObjectWave
+Effect <|-- DamageEffect
+ScriptableObject <|-- Effect
+MonoBehaviour <|-- EffectOnTrigger
+Effect <|-- HealEffect
+Effect <|-- PointChangeEffect
+EventChannel <|-- EmptyEventChannel
+EventListener <|-- EmptyEventListener
+EventChannel <|-- PlayerHealthEventChannel
+EventListener <|-- PlayerHealthEventListener
+MonoBehaviour <|-- Health
+IHealth <|.. Health
+IDamagable <|.. Health
+IHealable <|.. Health
+ScriptableObject <|-- HealthData
+MonoBehaviour <|-- HealthUI
+IUIObject <|.. HealthUI
+MonoBehaviour <|-- HeartUI
+MonoBehaviour <|-- InputReader
+Inputs <|.. InputReader
+Singleton <|-- GameManager
+MonoBehaviour <|-- PlayerController
+ScriptableObject <|-- PlayerData
+BulletSpawner --> ObjectWave : field
+ObjectWave --> FallingObject : field
+Object --> FallingObject : field
+EventChannel --> EventListener : parameter
+Health --> HealthData : field
+Health --> EventChannel : field
+Health --> HealthData : parameter
+Data --> HealthData : field
+Data --> EventChannel : field
+Data --> HealthData : parameter
+GameManager --> EventChannel : field
+PlayerController --> PlayerData : field
+@enduml
