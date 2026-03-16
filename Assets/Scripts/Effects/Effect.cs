@@ -2,5 +2,5 @@ using UnityEngine;
 
 public abstract class Effect : ScriptableObject
 {
-    public abstract void ApplyEffect(Collider2D target);
+    public abstract void ApplyEffect(Transform target);
 }

@@ -9,7 +9,7 @@ public class PointChangeEffect : Effect
     [SerializeField] private float _amount;
     [SerializeField] private string[] _affectedTags;
 
-    public override void ApplyEffect(Collider2D target)
+    public override void ApplyEffect(Transform target)
     {
         foreach (string tag in _affectedTags)
         {

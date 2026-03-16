@@ -6,7 +6,7 @@ public class DamageEffect : Effect
 {
     [SerializeField] private int _amount;
 
-    public override void ApplyEffect(Collider2D target)
+    public override void ApplyEffect(Transform target)
     {
         if (target.TryGetComponent<IDamagable>(out var damagable))
         {

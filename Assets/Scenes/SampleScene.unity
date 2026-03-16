@@ -449,6 +449,8 @@ GameObject:
   - component: {fileID: 736462091}
   - component: {fileID: 736462093}
   - component: {fileID: 736462092}
+  - component: {fileID: 736462094}
+  - component: {fileID: 736462095}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -710,6 +712,34 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+--- !u!114 &736462094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 736462084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 821fb9aee36a2ae4580fd3ac2eaaeee7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EffectOnMultiTap
+  _requiredTaps: 2
+  _tapWindow: 0.2
+  _effects: []
+--- !u!114 &736462095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 736462084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ef6896a924d8a34587b655674570598, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EffectOnFlick
+  _effects: []
 --- !u!1 &966641999
 GameObject:
   m_ObjectHideFlags: 0

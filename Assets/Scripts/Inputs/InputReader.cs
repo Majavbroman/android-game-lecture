@@ -7,6 +7,7 @@ public class InputReader : MonoBehaviour, Inputs.ITouchActions
     Inputs inputs;
 
     public static event Action<Vector2> TouchPositionEvent;
+    public static event Action<Vector2> TouchDeltaEvent;
     public static event Action TapEvent;
 
     private void Awake() {
@@ -36,6 +37,14 @@ public class InputReader : MonoBehaviour, Inputs.ITouchActions
         if (context.phase == InputActionPhase.Started)
         {
             TapEvent?.Invoke();
+        }
+    }
+
+    public void OnTouchDelta(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+        {
+            TouchDeltaEvent?.Invoke(context.ReadValue<Vector2>());
         }
     }
 }

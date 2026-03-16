@@ -10,7 +10,7 @@ public class EffectOnTrigger : MonoBehaviour
     {
         foreach (var effect in _effects)
         {
-            effect.ApplyEffect(target);
+            effect.ApplyEffect(target.transform);
         }
 
         Destroy(gameObject);
