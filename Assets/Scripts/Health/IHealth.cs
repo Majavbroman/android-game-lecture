@@ -8,4 +8,5 @@ public interface IHealth
     Dictionary<HeartType, Health.Data> GetData();
     Health.Data GetData(HeartType type);
     void ResetHealth();
+    HeartType GetLastHeartLost { get; }
 }

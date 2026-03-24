@@ -20,6 +20,9 @@ public class Health : MonoBehaviour, IHealth, IDamagable, IHealable
 
     private float _timeSinceLastDamage = 0f;
 
+    public HeartType GetLastHeartLost => _lastHeartLost;
+    private HeartType _lastHeartLost;
+
     private void Start()
     {
         if (_healthDataAsset != null)
@@ -103,6 +106,7 @@ public class Health : MonoBehaviour, IHealth, IDamagable, IHealable
 
                 data.Current -= data.Current % 2 == 0 ? 2 : 1;
                 data.Max -= data.Max % 2 == 0 ? 2 : 1;
+                _lastHeartLost = type;
 
                 break;
             }
@@ -110,6 +114,7 @@ public class Health : MonoBehaviour, IHealth, IDamagable, IHealable
             int damageToApply = Math.Min(amount, data.Current);
             data.Current -= damageToApply;
             amount -= damageToApply;
+            _lastHeartLost = type;
 
             if (amount <= 0) break;
         }
