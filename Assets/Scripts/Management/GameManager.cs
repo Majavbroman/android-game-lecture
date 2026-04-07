@@ -39,6 +39,10 @@ public class GameManager : Singleton<GameManager>, IDataSaver
         }
 
         _mainText.text = $"Final Score: {_score}\nHighest Score: {_highestScore}\nTap to Restart.";
+        if (DataHandler.Instance.GetData().SavedGameData(out var gameData))
+        {
+            gameData = null;
+        }
 
         InputReader.TapEvent += HandleTap;
     }
@@ -66,7 +70,7 @@ public class GameManager : Singleton<GameManager>, IDataSaver
         {
             return;
         }
-        
+
         DataHandler.Instance.SaveData();
     }
 
