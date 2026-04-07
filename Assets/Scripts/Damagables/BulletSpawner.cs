@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Unity.Android.Gradle.Manifest;
 using UnityEngine;
 
-public class BulletSpawner : MonoBehaviour
+public class BulletSpawner : MonoBehaviour, IDataSaver
 {
     [Serializable]
     private struct Interval
@@ -34,6 +36,8 @@ public class BulletSpawner : MonoBehaviour
     private void Start()
     {
         _changeIntervalCondition = () => _intervalQueue.Count > 1 && _bulletsSpawned >= _intervalQueue.Peek().WaveEndThreshold;
+
+        DataHandler.Instance.Register(this);
     }
 
     public void StartGame()
@@ -43,6 +47,19 @@ public class BulletSpawner : MonoBehaviour
         SetTimer();
     }
     public void EndGame() => _gameGoing = false;
+
+    public void ResumeGame(GameData gameData)
+    {
+        _gameGoing = true;
+        _bulletsSpawned = gameData.BulletsSpawned;
+
+        while (_changeIntervalCondition())
+        {
+            _intervalQueue.Dequeue();
+        }
+
+        SetTimer();
+    }
 
     private void Update()
     {
@@ -81,5 +98,11 @@ public class BulletSpawner : MonoBehaviour
     {
         ObjectWave currentWave = _intervalQueue.Peek().Wave;
         _spawnTimer = UnityEngine.Random.Range(currentWave.MinTimeBetweenSpawns, currentWave.MaxTimeBetweenSpawns);
+    }
+
+    public Task SaveData(ref SaveData saveData)
+    {
+        saveData.GameData.BulletsSpawned = _bulletsSpawned;
+        return Task.CompletedTask;
     }
 }

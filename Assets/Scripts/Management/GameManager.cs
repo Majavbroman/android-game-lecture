@@ -1,12 +1,14 @@
 using System;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 
-public class GameManager : Singleton<GameManager>
+public class GameManager : Singleton<GameManager>, IDataSaver
 {
 
     [SerializeField] private EventChannel<Empty> _onGameStart;
     [SerializeField] private EventChannel<Empty> _onGameEnd;
+    [SerializeField] private EventChannel<GameData> _onGameResume;
 
     [SerializeField] TextMeshProUGUI _mainText;
     [SerializeField] TextMeshProUGUI _scoreText;
@@ -17,6 +19,8 @@ public class GameManager : Singleton<GameManager>
     private void Start() {
         InputReader.TapEvent += HandleTap;
         PointChangeEffect.OnPointChange += ChangeScore;
+
+        DataHandler.Instance.Register(this);
     }
 
     public void ChangeScore(float amount)
@@ -41,11 +45,34 @@ public class GameManager : Singleton<GameManager>
 
     private void HandleTap()
     {
-        _mainText.text = "";
-        _score = 0;
-        _scoreText.text = $"{_score}";
-        _onGameStart.Invoke(new Empty());
+        if (DataHandler.Instance.GetData().SavedGameData(out var gameData))
+        {
+            _score = gameData.Score;
+            _onGameResume.Invoke(gameData);
+        }
+        else
+        {
+            _score = 0;
+            _onGameStart.Invoke(new Empty());
+        }
 
+        _mainText.text = "";
+        _scoreText.text = $"{_score}";
         InputReader.TapEvent -= HandleTap;
+    }
+
+    private void OnApplicationQuit() {
+        if (!DataHandler.Instance.GetData().SavedGameData(out _))
+        {
+            return;
+        }
+        
+        DataHandler.Instance.SaveData();
+    }
+
+    public Task SaveData(ref SaveData saveData)
+    {
+        saveData.GameData.Score = _score;
+        return Task.CompletedTask;
     }
 }

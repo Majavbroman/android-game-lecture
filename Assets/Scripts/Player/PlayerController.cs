@@ -1,7 +1,8 @@
+using System.Threading.Tasks;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDataSaver
 {
     [SerializeField] private PlayerData _playerData;
 
@@ -17,6 +18,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         InputReader.TouchPositionEvent += HandleTouchPosition;
+        DataHandler.Instance.Register(this);
     }
 
     void FixedUpdate()
@@ -28,5 +30,16 @@ public class PlayerController : MonoBehaviour
     private void HandleTouchPosition(Vector2 position)
     {
         touchPosition = Camera.main.ScreenToWorldPoint(position).x;
+    }
+
+    public Task SaveData(ref SaveData saveData)
+    {
+        saveData.GameData.Position = transform.position.x;
+        return Task.CompletedTask;
+    }
+
+    public void OnGameResume(GameData gameData)
+    {
+        transform.position = new Vector3(gameData.Position, transform.position.y, transform.position.z);
     }
 }

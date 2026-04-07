@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 
-public class Health : MonoBehaviour, IHealth, IDamagable, IHealable
+public class Health : MonoBehaviour, IHealth, IDamagable, IHealable, IDataSaver
 {
     public class Data
     {
@@ -12,7 +13,7 @@ public class Health : MonoBehaviour, IHealth, IDamagable, IHealable
     }
 
     [SerializeField] private HealthData _healthDataAsset;
-    private readonly Dictionary<HeartType, Data> _healthData = new();
+    private Dictionary<HeartType, Data> _healthData = new();
 
     private Action _onDeath;
 
@@ -32,6 +33,8 @@ public class Health : MonoBehaviour, IHealth, IDamagable, IHealable
 
         GameManager gameManager = GameManager.Instance;
         _onDeath = gameManager.PlayerDied;
+
+        DataHandler.Instance.Register(this);
     }
 
     private void Update() {
@@ -57,6 +60,12 @@ public class Health : MonoBehaviour, IHealth, IDamagable, IHealable
             };
         }
 
+        _healthEventChannel.Invoke(this);
+    }
+
+    public void ResumeGame(GameData gameData)
+    {
+        _healthData = gameData.GetHealthData();
         _healthEventChannel.Invoke(this);
     }
 
@@ -150,5 +159,11 @@ public class Health : MonoBehaviour, IHealth, IDamagable, IHealable
         }
 
         _healthEventChannel.Invoke(this);
+    }
+
+    public Task SaveData(ref SaveData saveData)
+    {
+        saveData.GameData.SetHealthData(_healthData);
+        return Task.CompletedTask;
     }
 }
