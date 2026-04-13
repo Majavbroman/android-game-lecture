@@ -11,7 +11,13 @@ public enum ObjectType
 [System.Serializable]
 public class FallingObjectFactory
 {
-    [SerializeField] private FallingObject[] _prefabs;
+    public struct ObjectPrefab
+    {
+        public ObjectType Type;
+        public FallingObject Prefab;
+    }
+
+    [SerializeField] private ObjectPrefab[] _prefabs;
 
     private readonly Dictionary<ObjectType, FallingObject> _objectDictionary = new();
 
@@ -21,7 +27,7 @@ public class FallingObjectFactory
         {
             if (!_objectDictionary.ContainsKey(obj.Type))
             {
-                _objectDictionary.Add(obj.Type, obj);
+                _objectDictionary.Add(obj.Type, obj.Prefab);
             }
         }
     }

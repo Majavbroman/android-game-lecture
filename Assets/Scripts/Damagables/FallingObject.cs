@@ -4,8 +4,6 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class FallingObject : MonoBehaviour
 {
-    public ObjectType Type;
-
     [SerializeField] private protected float _minGravity;
     [SerializeField] private protected float _maxGravity;
     [SerializeField] private protected float _rotationSpeed;
