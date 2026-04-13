@@ -19,6 +19,8 @@ public class BulletSpawner : MonoBehaviour, IDataSaver
     private Queue<Interval> _intervalQueue = new Queue<Interval>();
     private Func<bool> _changeIntervalCondition;
 
+    [SerializeField] private FallingObjectFactory _factory;
+
     private float _bulletsSpawned = 0;
     private float _spawnTimer;
 
@@ -85,9 +87,8 @@ public class BulletSpawner : MonoBehaviour, IDataSaver
     {
         for (int i = 0; i < amount; i++)
         {
-            float spawnX = UnityEngine.Random.Range(0.05f, 0.95f);
-            Vector2 spawnPosition = Camera.main.ViewportToWorldPoint(new Vector3(spawnX, 1.1f, 0));
-            FallingObject @object = Instantiate(_intervalQueue.Peek().Wave.GetRandomObject(), spawnPosition, Quaternion.identity);
+            ObjectType randomObjectType = _intervalQueue.Peek().Wave.GetRandomObject();
+            FallingObject @object = _factory.CreateObject(randomObjectType);
             @object.SetObjectAmount(amount);
             _bulletsSpawned++;
             yield return new WaitForSeconds(0.15f * (amount - 1));

@@ -8,7 +8,7 @@ public class ObjectWave : ScriptableObject
     [Serializable]
     public class Object
     {
-        public FallingObject Obj;
+        public ObjectType Obj;
         [Range(0, 100)] public int Probability;
     }
 
@@ -18,7 +18,7 @@ public class ObjectWave : ScriptableObject
     [Range(1, 10)] public int MinObjectSpawns;
     [Range(1, 10)] public int MaxObjectSpawns;
 
-    public FallingObject GetRandomObject()
+    public ObjectType GetRandomObject()
     {
         int randomValue = UnityEngine.Random.Range(0, 100);
         int cumulativeProbability = 0;

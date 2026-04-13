@@ -183,7 +183,6 @@ MonoBehaviour:
   _effects:
   - {fileID: 11400000, guid: ae97c5f431958c0458e54c5c4bbb01d5, type: 2}
   - {fileID: 11400000, guid: d491db71e705b914990da147e8cf46a0, type: 2}
-  _collided: 0
 --- !u!114 &3587881179098932768
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,6 +195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5118c983931eff94eb326c6d8cf971bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FallingObject
+  Type: 1
   _minGravity: 0.5
   _maxGravity: 1.25
   _rotationSpeed: 0

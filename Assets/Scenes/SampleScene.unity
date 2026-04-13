@@ -1075,6 +1075,11 @@ MonoBehaviour:
     WaveEndThreshold: 120
   - Wave: {fileID: 11400000, guid: 0eb04bfb0ed8bc24b96b339bc88b9009, type: 2}
     WaveEndThreshold: 10000
+  _factory:
+    _prefabs:
+    - {fileID: 3587881179098932768, guid: 021df5a48eaa13c4382748d697835c19, type: 3}
+    - {fileID: 3587881179098932768, guid: 006a607dcbd787c4c9cea54205537a95, type: 3}
+    - {fileID: 3587881179098932768, guid: 9feb14f508b51a142ac40ccdf6c916e3, type: 3}
 --- !u!4 &966642001
 Transform:
   m_ObjectHideFlags: 0

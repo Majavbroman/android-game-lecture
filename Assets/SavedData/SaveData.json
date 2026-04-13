@@ -1,17 +1,17 @@
 {
     "GameData": {
-        "Score": 5.0,
-        "Position": -0.7827885150909424,
+        "Score": 15.0,
+        "Position": -0.4851570129394531,
         "HealthData": [
             {
                 "Type": 0,
                 "Max": 6,
-                "Current": 6
+                "Current": 4
             },
             {
                 "Type": 2,
                 "Max": 3,
-                "Current": 1
+                "Current": 0
             },
             {
                 "Type": 3,
@@ -19,6 +19,6 @@
                 "Current": 0
             }
         ],
-        "BulletsSpawned": 9.0
+        "BulletsSpawned": 19.0
     }
 }

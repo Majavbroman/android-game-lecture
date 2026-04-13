@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Wave 006
   m_EditorClassIdentifier: Assembly-CSharp::ObjectWave
   AvailableObjects:
-  - Obj: {fileID: 3587881179098932768, guid: 021df5a48eaa13c4382748d697835c19, type: 3}
+  - Obj: 0
     Probability: 80
-  - Obj: {fileID: 3587881179098932768, guid: 9feb14f508b51a142ac40ccdf6c916e3, type: 3}
+  - Obj: 2
     Probability: 15
-  - Obj: {fileID: 3587881179098932768, guid: 006a607dcbd787c4c9cea54205537a95, type: 3}
+  - Obj: 1
     Probability: 5
   MinTimeBetweenSpawns: 1.25
   MaxTimeBetweenSpawns: 2
